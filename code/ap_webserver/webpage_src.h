@@ -11,8 +11,8 @@ const String postForms = "<html>\
   </head>\
   <body>\
     <h1>POST plain text to ESP8266</h1><br>\
-    <form method=\"post\" enctype=\"text/plain\" action=\"/postplain/\">\
-      <input type=\"text\" name=\'{ \"\' value=\'\" }\'><br>\<br>\
+    <form method=\"POST\" action=\"/postplain/\">\
+      <input type=\"text\" name=\"text_val\" placeholder=\"textVal\"><br>\<br>\
       <input type=\"submit\" value=\"Submit\">\
     </form>\
   </body>\

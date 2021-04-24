@@ -34,7 +34,7 @@ void setup() {
   Serial.println(myIP);
 
   server.on("/", handleRoot);
-  server.on("/postplain/", handlePlain);
+  server.on("/postplain/",HTTP_POST, handlePlain);
   server.onNotFound(handleNotFound);
   server.begin();
   Serial.println("HTTP server started");
@@ -58,19 +58,24 @@ void handleRoot() {
 }
 
 void handlePlain() {
-  String inputData;
+  String text_val;
   if (server.method() != HTTP_POST) {
     digitalWrite(led, 1);
-    inputData = "Method Not Allowed";
+    text_val = "Method Not Allowed";
     server.send(405, "text/plain", "Method Not Allowed");
     digitalWrite(led, 0);
   } else {
     digitalWrite(led, 1);
-    inputData = server.arg("plain");
-    server.send(200, "text/plain", "POST body was:\n" + inputData);
-    digitalWrite(led, 0);
+    if (server.hasArg("text_val")) {
+      text_val = server.arg("text_val");
+      server.send(200, "text/plain", "POST body was:\n" + text_val);
+      digitalWrite(led, 0);
+      Serial.print("get post data:");
+      Serial.println(text_val);
+    } else {
+      Serial.println("cannot get post data");
+    }
   }
-    Serial.println(inputData);
 }
 
 void handleNotFound() {
